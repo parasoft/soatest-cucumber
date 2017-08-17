@@ -34,6 +34,11 @@ import java.util.*;
 
 import javax.activation.*;
 import javax.ws.rs.*;
+import javax.xml.parsers.*;
+import javax.xml.xpath.*;
+
+import org.w3c.dom.*;
+import org.xml.sax.*;
 
 import cucumber.api.java8.*;
 import cucumber.runtime.*;
@@ -50,7 +55,22 @@ public class StepDefinitionLoader {
     private static final String SET_COLON = "set:"; //$NON-NLS-1$
     private static final String COPY_COLON = "copy:"; //$NON-NLS-1$
     private static final String SLASH_TEST_SUITE = "/Test Suite"; //$NON-NLS-1$
+    private static final String FUNCVIOL = "//FuncViol"; //$NON-NLS-1$
+    private static final String TEST_CASE_ID = "testCaseId"; //$NON-NLS-1$
+    private static final String MSG ="msg"; //$NON-NLS-1$
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+    private static final DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+    private static final XPathExpression funcViolsXPath;
+
+    static {
+        docBuilderFactory.setNamespaceAware(true);
+        docBuilderFactory.setExpandEntityReferences(false);
+        try {
+            funcViolsXPath = compileXPath(XPathFactory.newInstance(), FUNCVIOL);
+        } catch (XPathExpressionException e) {
+            throw new CucumberException(e);
+        }
+    }
 
     private final String targetId;
     private final String targetSuiteId;
@@ -78,15 +98,15 @@ public class StepDefinitionLoader {
                 });
         JavaBackend.INSTANCE.get().addAfterHookDefinition(LambdaGlueBase.EMPTY_TAG_EXPRESSIONS,
                 LambdaGlueBase.NO_TIMEOUT, LambdaGlueBase.DEFAULT_AFTER_ORDER, () -> {
-            try {
-                String output = runTest(runner);
-                if (output != null) {
-                    throw new CucumberException(output);
-                }
-            } finally {
-                closeClient();
-            }
-        });
+                    try {
+                        String output = runTest(runner);
+                        if (output != null) {
+                            throw new CucumberException(output);
+                        }
+                    } finally {
+                        closeClient();
+                    }
+                });
     }
 
     public static void loadStepDefinitions(Class<? extends GlueBase> clazz,
@@ -303,16 +323,16 @@ public class StepDefinitionLoader {
         TestExecutions testExecutions = client.v5().getTestExecutions();
         String jobId = null;
         try {
-        jobId = testExecutions.postTestExecutions(new TestExecutionsRequest()
-                .withGeneral(new General()
-                        .withConfig(runner.getTestConfiguration()))
-                .withScopeOptions(new ScopeOptions()
-                        .withWorkspace(new Workspace()
-                                .withResources(Collections.singletonList(targetId))))).getId();
+            jobId = testExecutions.postTestExecutions(new TestExecutionsRequest()
+                    .withGeneral(new General()
+                            .withConfig(runner.getTestConfiguration()))
+                    .withScopeOptions(new ScopeOptions()
+                            .withWorkspace(new Workspace()
+                                    .withResources(Collections.singletonList(targetId))))).getId();
         } catch (WebApplicationException e) {
             return e.getMessage();
         }
-        System.out.println(">Test Execution - waiting on tests to complete."); //$NON-NLS-1$
+        System.out.println("Test Execution - waiting on tests to complete."); //$NON-NLS-1$
         boolean testExecutionNotDone = true;
         while (testExecutionNotDone) {
             TestExecutionsStatusResponse status = null;
@@ -331,21 +351,60 @@ public class StepDefinitionLoader {
                 }
             }
         }
-        System.out.println(">Test Execution of [" + targetId + //$NON-NLS-1$
+        System.out.println("Test Execution of [" + targetId + //$NON-NLS-1$
                 "] completed."); //$NON-NLS-1$
         TestExecutionsResultsResponse results = null;
         try {
             results = testExecutions
-                    .getTestExecutionsResults(false, false, false, jobId);
+                    .getTestExecutionsResults(false, false, true, jobId);
         } catch (WebApplicationException e) {
             return e.getMessage();
         }
         Summary resultSummary = results.getSummary();
-        String summary = ">Test Execution of [" + targetId + "], " + //$NON-NLS-1$
+        StringBuilder summary = new StringBuilder(
+                "Test Execution of [" + targetId + "], " + //$NON-NLS-1$
                 "results (failures/total): " + //$NON-NLS-1$
                 resultSummary.getFailureCount() + '/' +
-                resultSummary.getExecution().getTestRunCount();
+                resultSummary.getExecution().getTestRunCount());
+        if (resultSummary.getFailureCount() != 0) {
+            String xmlReport = results.getXmlReport();
+            if (xmlReport != null) {
+                try {
+                    byte[] xmlReportBytes = Base64.getDecoder().decode(xmlReport);
+                    Document doc = docBuilderFactory.newDocumentBuilder().parse(
+                            new InputSource(new ByteArrayInputStream(xmlReportBytes)));
+                    Element docElement = doc.getDocumentElement();
+                    NodeList violMsgs = (NodeList) funcViolsXPath.evaluate(
+                            docElement, XPathConstants.NODESET);
+                    XPathFactory factory = XPathFactory.newInstance();
+                    for (int i = 0; i < violMsgs.getLength(); i++) {
+                        Element funcViol = (Element) violMsgs.item(i);
+                        String testCaseId = funcViol.getAttribute(TEST_CASE_ID);
+                        String message = funcViol.getAttribute(MSG);
+                        Element testElement = (Element) compileXPath(factory,
+                                "//Test[@id='" + //$NON-NLS-1$
+                                testCaseId + "']") //$NON-NLS-1$
+                                .evaluate(docElement, XPathConstants.NODE);
+                        String testName = testElement.getAttribute("name");
+                        summary.append('\n');
+                        summary.append(testName + '\n');
+                        summary.append(message + '\n');
+                    }
+                } catch (SAXException | IOException |
+                        ParserConfigurationException |
+                        XPathExpressionException e) {
+                    e.printStackTrace();
+                }
+            }
+            System.out.println(summary);
+            return summary.toString();
+        }
         System.out.println(summary);
-        return resultSummary.getFailureCount() != 0 ? summary : null;
+        return null;
+    }
+
+    private static final XPathExpression compileXPath(XPathFactory factory,
+            String xPath) throws XPathExpressionException {
+        return factory.newXPath().compile(xPath);
     }
 }
