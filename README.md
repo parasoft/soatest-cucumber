@@ -50,8 +50,8 @@ executed for each pattern.
 
 Create a class that extends cucumber.api.java8.GlueBase or one if its
 subclasses like cucumber.api.java8.En, similar to the
-[lamda expressions](https://cucumber.io/docs/reference/jvm#lambda-expressions-java-8)
-example.  However, instead of coding step definitions as lamda expressions
+[lambda expressions](https://cucumber.io/docs/reference/jvm#lambda-expressions-java-8)
+example.  However, instead of coding step definitions as lambda expressions
 simply call StepDefinitionLoader.loadStepDefinitions() method to load the step
 definitions from a JSON document.  See this
 [example](src/it/java/com/parasoft/cucumber/soatest/parabank/ParaBankStepDefinitions.java).
