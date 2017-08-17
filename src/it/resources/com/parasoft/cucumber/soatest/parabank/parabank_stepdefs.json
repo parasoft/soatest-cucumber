@@ -1,0 +1,61 @@
+{
+	"runner": {
+		"server": "http://localhost:9080",
+		"executionSuite": {
+			"parent": "/TestAssets",
+			"name": "ParaBankTests.tst",
+			"variables": [
+				{
+					"name": "SWAGGER",
+					"value": "http://localhost:8090/parabank/services/bank/swagger.yaml"
+				},
+				{
+					"name": "BASEURL",
+					"value": "http://localhost:8090/parabank/services/bank"
+				}
+			]
+		},
+		"assets": [
+			{
+				"path": "parabank_stepdefs.tst",
+				"parent": "/TestAssets"
+			}
+		]
+	},
+	"stepdefs": [
+		{
+			"step": "Given",
+			"pattern": "^I am user (.*)$",
+			"args": 1,
+			"actions": [
+				"set:customerId"
+			]
+		},
+		{
+			"step": "And",
+			"pattern": "^using funds from account (.*)$",
+			"args": 1,
+			"actions": [
+				"set:fromAccountId"
+			]
+		},
+		{
+			"step": "When",
+			"pattern": "^I create a new (.*) account$",
+			"args": 1,
+			"actions": [
+				"set:accountType",
+				"copy:/TestAssets/CucumberSteps.tst/Test Suite/Test Steps/CreateAccount"
+			]
+		},
+		{
+			"step": "Then",
+			"pattern": "^A new (.*) account should exist$",
+			"args": 1,
+			"actions": [
+				"set:expectedAccountType",
+				"copy:/TestAssets/CucumberSteps.tst/Test Suite/Test Steps/GetAccountInfo"
+			]
+		}
+	]
+}
