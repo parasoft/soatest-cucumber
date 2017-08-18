@@ -25,6 +25,15 @@ JUnit but can be invoked from either Cucumber's
 [CLI Runner](https://cucumber.io/docs/reference/jvm#cli-runner).
 
 
+## Tutorial
+
+A [tutorial](tutorial.md) is available which provides step-by-step instructions
+for how to test a real web application by executing a
+[Cucumber](https://cucumber.io) test scenario with
+[Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
+[Click here](tutorial.md) to view the tutorial.
+
+
 ## Requirements
 * [Parasoft SOAtest](https://www.parasoft.com/product/soatest/)
 * Java 8
