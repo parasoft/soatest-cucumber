@@ -40,15 +40,14 @@ or intend to write.  You need to identify the types of steps and high-level
 requirements for what actions would need to be performed for each step.
    * For more explanation about steps and step definitions,
 [click here](https://cucumber.io/docs/reference#step-definitions).
-   * For an example of a Cucumber test sceneario,
-[click here](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank.feature)
-test scenario.
+   * For an example of a Cucumber test scenario,
+[click here](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank.feature).
 
 1. **Create a SOAtest test suite (.tst).**  Now that you've identified what
 types of actions are needed for your step definitions, you can being
 implementing those actions as SOAtest test cases.  You must create at least one
-SOAtest suite suite (.tst) file in Parasoft SOAtest that contains the tests or
-scenarios for executing each step definitions.  Please take note the following:
+SOAtest test suite (.tst) file in Parasoft SOAtest that contains the tests or
+scenarios for executing each step definition.  Please take note the following:
    * You are effectively creating a library of re-usable test cases and
 scenarios.  This java modules will copy test cases from your SOAtest tst suite
 and configure them dynamically depending on what steps appear in the cucumber
@@ -63,12 +62,13 @@ set in the tst file but will be injected by this java module when the Cucumber
 scenario is being executed.  This means that the test cases and scenarios you
 are creating in SOAtest shouldn't necessarily be able to run as-is
 since the values of any variables are not being set by anything in the tst file.
-   * For reference, see this SOAtest test suite
-[example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.tst).
-Notice how the query parameters and JSON assertions are configured using various
-variables not defined in the tst file as mentioned above.
+   * For reference, download and open this
+[example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.tst)
+test suite in SOAtest.  Notice how the query parameters and JSON assertions are
+configured using various variables that are not actually defined in the tst
+file.
    * Please refer to the SOAtest User's Guide for detail and best practices for
-creating re-usable, modular test suite.  Search for
+creating re-usable, modular test suites.  Search for
 "Reusing/Modularizing Test Suites".
 
 1. **Create a Cucumber java project.**  Follow the steps to create and
@@ -134,7 +134,7 @@ StepDefinitionLoader.loadStepDefinitions() as seen in
 
 1. **Create a JUnit suite.**  This is only required if you wish to use
 Cucumber's JUnit Runner as opposed to their CLI Runner.  Under
-"src/test/java/*r_java_package*" create an empty java class annotated with
+"src/test/java/*your_java_package*" create an empty java class annotated with
 "@RunWith(Cucumber.class)" as described
 [here](https://cucumber.io/docs/reference/jvm#junit-runner).  Also see
 [this example](src/it/java/com/parasoft/cucumber/soatest/parabank/ParaBankIT.java).
@@ -152,7 +152,7 @@ where the SOAtest Server is deployed
 1. **Run your Cucumber scenario.**  From maven this would typically be
 "mvn clean test" to run JUnits under "src/test/java" or "mvn clean verify" if
 your test sources were added as integration tests under "src/it/java" as in
-[this example](src/it/java).
+[this example](src/it/java/com/parasoft/cucumber/soatest/parabank).
 
 
 ## Example
@@ -160,8 +160,8 @@ your test sources were added as integration tests under "src/it/java" as in
 This project includes an example for executing a Cucumber test scenario against
 [ParaBank](https://github.com/parasoft/parabank).  For step-by-step
 instructions for how this example was constructed, please follow the
-(tutorial)[tutorial.md].  Otherwise, to simple execute this example, please
-follow these steps:
+[tutorial](tutorial.md).  Otherwise, to simply execute this example, follow
+these steps:
  1. Checkout and build ParaBank.  View the README on the
 [ParaBank project page](https://github.com/parasoft/parabank)
 for exact instructions.
@@ -172,7 +172,7 @@ to listen on port 8090 instead of 8080.
 http://localhost:8090/parabank
  1. Start your SOAtest server.
  1. Checkout this project and run "mvn -P integration-tests clean verify".  You
-should see the following output:
+should see the following output from Apache maven:
 ```
 [INFO] -------------------------------------------------------
 [INFO]  T E S T S
