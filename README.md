@@ -80,22 +80,22 @@ details on how to do this.  You should have a maven pom.xml with the
 pom.xml:
    * Add the build.parasoft.com maven repository which hosts releases for this
 java module:
-```
-<repositories>
-  <repository>
-    <id>Parasoft</id>
-    <url>http://build.parasoft.com/maven/</url>
-  </repository>
-</repositories>
-```
+   ```
+   <repositories>
+     <repository>
+       <id>Parasoft</id>
+       <url>http://build.parasoft.com/maven/</url>
+     </repository>
+   </repositories>
+   ```
    * Add the following to the "dependencies" element:
-```
-<dependency>
-  <groupId>com.parasoft</groupId>
-  <artifactId>soatest-cucumber</artifactId>
-  <version>0.0.1</version>  <!-- set this to current release version -->
-</dependency>
-```
+   ```
+   <dependency>
+     <groupId>com.parasoft</groupId>
+     <artifactId>soatest-cucumber</artifactId>
+     <version>0.0.1</version>  <!-- set this to current release version -->
+   </dependency>
+   ```
 
 1. **Configure step definitions.**  If needed, create the directory
 "src/test/resources/*your_java_package*" where *your_java_package* is the
