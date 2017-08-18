@@ -9,20 +9,17 @@ Execute [Cucumber](https://cucumber.io) test scenarios using
  * Implement Cucumber step definitions as
 [Parasoft SOAtest](https://www.parasoft.com/product/soatest/) test cases,
 eliminating the labor and difficulty of manually coding step definitions.
- * Use JSON to define the patterns for your step definitions and link them to
-your existing SOAtest test cases.
+ * Use JSON to define your step definitions and link them to SOAtest test cases.
 
 
 ## Introduction
 
-This java module enables you to load step definitions from a JSON document,
-dynamically construct and configure a SOAtest test suite based on steps in the
-Cucumber scenario, then automatically execute that test suite on a SOAtest
-server.  Test cases are configured by setting test suite variables from
-arguments passed to the step definition.  This module has no dependencies on
-JUnit but can be invoked from either Cucumber's
-[JUnit Runner](https://cucumber.io/docs/reference/jvm#junit-runner) or
-[CLI Runner](https://cucumber.io/docs/reference/jvm#cli-runner).
+This java module enables you to define step definitions within a JSON document.
+It will dynamically construct and configure a SOAtest test suite based on steps
+in a Cucumber feature file, then automatically execute that test suite on a SOAtest
+server.  This module has no dependencies on JUnit but can be invoked from either
+Cucumber's [JUnit Runner](https://cucumber.io/docs/reference/jvm#junit-runner)
+or [CLI Runner](https://cucumber.io/docs/reference/jvm#cli-runner).
 
 
 ## Tutorial
@@ -30,13 +27,14 @@ JUnit but can be invoked from either Cucumber's
 A [tutorial](tutorial.md) is available which provides step-by-step instructions
 for how to test a real web application by executing a
 [Cucumber](https://cucumber.io) test scenario with
-[Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
+[Parasoft SOAtest](https://www.parasoft.com/product/soatest/)
+against the Parabank sample application that comes with SOAtest.
 [Click here](tutorial.md) to view the tutorial.
 
 
 ## Requirements
 * [Parasoft SOAtest](https://www.parasoft.com/product/soatest/)
-* Java 8
+* [Java 8](http://www.oracle.com/technetwork/java/javase/overview/java8-2100321.html)
 * [Apache Maven](https://maven.apache.org/)
 
 
