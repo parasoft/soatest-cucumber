@@ -376,19 +376,30 @@ public class StepDefinitionLoader {
                     Element docElement = doc.getDocumentElement();
                     NodeList violMsgs = (NodeList) funcViolsXPath.evaluate(
                             docElement, XPathConstants.NODESET);
-                    XPathFactory factory = XPathFactory.newInstance();
+                    Map<String, List<String>> failures = new LinkedHashMap<>();
                     for (int i = 0; i < violMsgs.getLength(); i++) {
                         Element funcViol = (Element) violMsgs.item(i);
                         String testCaseId = funcViol.getAttribute(TEST_CASE_ID);
                         String message = funcViol.getAttribute(MSG);
+                        List<String> testFailures = failures.get(testCaseId);
+                        if (testFailures == null) {
+                            testFailures = new ArrayList<>();
+                            failures.put(testCaseId, testFailures);
+                        }
+                        testFailures.add(message);
+                    }
+                    XPathFactory factory = XPathFactory.newInstance();
+                    for (Map.Entry<String, List<String>> failure : failures.entrySet()) {
                         Element testElement = (Element) compileXPath(factory,
                                 "//Test[@id='" + //$NON-NLS-1$
-                                testCaseId + "']") //$NON-NLS-1$
+                                failure.getKey() + "']") //$NON-NLS-1$
                                 .evaluate(docElement, XPathConstants.NODE);
                         String testName = testElement.getAttribute("name");
                         summary.append('\n');
                         summary.append(testName + '\n');
-                        summary.append(message + '\n');
+                        for (String message : failure.getValue()) {
+                            summary.append(message + '\n');
+                        }
                     }
                 } catch (SAXException | IOException |
                         ParserConfigurationException |
