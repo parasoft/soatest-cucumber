@@ -45,7 +45,7 @@
 			"args": 1,
 			"actions": [
 				"set:accountType",
-				"copy:/TestAssets/CucumberSteps.tst/Test Suite/Test Steps/CreateAccount"
+				"copy:/TestAssets/parabank_stepdefs.tst/Test Suite/Test Steps/CreateAccount"
 			]
 		},
 		{
@@ -54,7 +54,7 @@
 			"args": 1,
 			"actions": [
 				"set:expectedAccountType",
-				"copy:/TestAssets/CucumberSteps.tst/Test Suite/Test Steps/GetAccountInfo"
+				"copy:/TestAssets/parabank_stepdefs.tst/Test Suite/Test Steps/GetAccountInfo"
 			]
 		}
 	]
