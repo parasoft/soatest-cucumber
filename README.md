@@ -48,22 +48,22 @@ happen at each step.  Think of each step definition as a map between a pattern
 and a reusable SOAtest test or test suite that should get run when that step
 gets executed.
 
+For example, one step definition might reference an individual SOAtest REST Client
+that makes a call to a REST API.  A second step definition might reference
+a SOAtest REST Client with a chained JSON Assertor that validates data in a
+response from a different REST API.  A third step definition might reference
+a SOAtest DB Tool with a chained XML Assertor that executes a DB query and
+validates data in the result set.  Step definitions can reference individual
+tests or a test suite that contains a number of tests within it.
+
 You will create a library of one or more SOAtest .tst files that contain
-a number of individual tests and/or test suites.  These .tst files will be
-deployed on a SOAtest server.  An individual step definition will define which
-test or test suite in which .tst file should be used for that test step.  As the
+a number of tests and/or test suites that will be referenced by the step
+definitions.  These .tst files will be deployed on a SOAtest server.  As the
 Cucumber scenario is executed, this module will use the SOAtest server's
 REST API to copy the test steps from your libary of .tst files into a new
 .tst file that defines the scenario.  Once all the steps are copied in, then
 the module will run the scenario on the SOAtest server and report the results
 of the test execution back into Cucumber.
-
-For example, one step definition might reference an individual REST Client
-that makes a call to a REST API.  A second step definition might reference
-a REST Client with a chained JSON Assertor that validates data in a
-response from a different REST API.  A third step definition might reference
-a DB Tool with a chained XML Assertor that executes a DB query and validates
-data in the result set.
 
 Test steps can also pass data between each other by leveraging SOAtest
 test variables.
