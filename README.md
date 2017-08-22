@@ -107,13 +107,13 @@ creating re-usable, modular test suites.  Search for
 "Reusing/Modularizing Test Suites".
 
 1. **Create a Cucumber java project.**  Follow the steps to create and
-configure a maven java project for running cucumber tests.  Read the description
+configure a Maven java project for running cucumber tests.  Read the description
 from the
 [Cucumber java documentation](https://cucumber.io/docs/reference/jvm#java) for
-details on how to do this.  You should have a maven pom.xml with the
+details on how to do this.  You should have a Maven pom.xml with the
 "info.cukes:cucumber-java8" dependency.  Additionally, add the following to your
 pom.xml:
-   * Add the build.parasoft.com maven repository which hosts releases for this
+   * Add the build.parasoft.com Maven repository which hosts releases for this
 java module:
    ```
    <repositories>
@@ -129,6 +129,7 @@ java module:
      <groupId>com.parasoft</groupId>
      <artifactId>soatest-cucumber</artifactId>
      <version>0.0.1</version>  <!-- set this to current release version -->
+     <scope>test</scope>
    </dependency>
    ```
 
@@ -184,7 +185,7 @@ for your step definitions.
 1. **Deploy your application under test**, making sure it is acessible from the host
 where the SOAtest Server is deployed
 
-1. **Run your Cucumber scenario.**  From maven this would typically be
+1. **Run your Cucumber scenario.**  From Maven this would typically be
 "mvn clean test" to run JUnits under "src/test/java" or "mvn clean verify" if
 your test sources were added as integration tests under "src/it/java" as in
 [this example](src/it/java/com/parasoft/cucumber/soatest/parabank).
@@ -207,7 +208,7 @@ to listen on port 8090 instead of 8080.
 http://localhost:8090/parabank
  1. Start your SOAtest server.
  1. Checkout this project and run "mvn -P integration-tests clean verify".  You
-should see the following output from Apache maven:
+should see the following output from Apache Maven:
 ```
 [INFO] -------------------------------------------------------
 [INFO]  T E S T S
