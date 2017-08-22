@@ -401,20 +401,20 @@ in the test scenario as having executed instead of being skipped.
    * Click the **Console** view and observe the following message from Cucumber,
 indicating that the tst file ran on the SOAtest server and that all the steps
 in the Cucumber scenario have passed:
-   ```
-   Feature: ParaBank accounts
-     Create and use accounts in ParaBank
-   Test Execution - waiting on tests to complete.
-   Test Execution of [/TestAssets/ParaBankTests.tst] completed.
-   Test Execution of [/TestAssets/ParaBankTests.tst], results (failures/total): 0/2
+     ```
+     Feature: ParaBank accounts
+       Create and use accounts in ParaBank
+     Test Execution - waiting on tests to complete.
+     Test Execution of [/TestAssets/ParaBankTests.tst] completed.
+     Test Execution of [/TestAssets/ParaBankTests.tst], results (failures/total): 0/2
 
-     Scenario: Create a new loan account    # com/parasoft/cucumber/soatest/parabank/parabank.feature:4
-       Given I am user 12212                # StepDefinitionLoader.java:114
-       And using funds from account 54321   # StepDefinitionLoader.java:114
-       When I create a new loan account     # StepDefinitionLoader.java:114
-       Then A new loan account should exist # StepDefinitionLoader.java:114
+       Scenario: Create a new loan account    # com/parasoft/cucumber/soatest/parabank/parabank.feature:4
+         Given I am user 12212                # StepDefinitionLoader.java:114
+         And using funds from account 54321   # StepDefinitionLoader.java:114
+         When I create a new loan account     # StepDefinitionLoader.java:114
+         Then A new loan account should exist # StepDefinitionLoader.java:114
 
-   1 Scenarios (1 passed)
-   4 Steps (4 passed)
-   0m4.960s
-   ```
+     1 Scenarios (1 passed)
+     4 Steps (4 passed)
+     0m4.960s
+     ```
