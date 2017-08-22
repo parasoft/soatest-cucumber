@@ -202,35 +202,35 @@ This project includes an example for executing a Cucumber test scenario against
 instructions for how this example was constructed, please follow the
 [tutorial](tutorial.md).  Otherwise, to simply execute this example, follow
 these steps:
- 1. Checkout and build ParaBank.  View the README on the
+1. Checkout and build ParaBank.  View the README on the
 [ParaBank project page](https://github.com/parasoft/parabank)
 for exact instructions.
- 1. Deploy the parabank.war into a Tomcat Server on the same machine that has
+1. Deploy the parabank.war into a Tomcat Server on the same machine that has
 SOAtest server.  In your tomcat installation directory, edit the conf/server.xml
 to listen on port 8090 instead of 8080.
- 1. Start your tomcat server and verify you can access ParaBank on
+1. Start your tomcat server and verify you can access ParaBank on
 http://localhost:8090/parabank
- 1. Start your SOAtest server.
- 1. Checkout this project and run "mvn -P integration-tests clean verify".  You
+1. Start your SOAtest server.
+1. Checkout this project and run "mvn -P integration-tests clean verify".  You
 should see the following output from Apache Maven:
-```
-[INFO] -------------------------------------------------------
-[INFO]  T E S T S
-[INFO] -------------------------------------------------------
-[INFO] Running com.parasoft.cucumber.soatest.parabank.ParaBankIT
-Feature: ParaBank accounts
-  Create and use accounts in ParaBank
-Test Execution - waiting on tests to complete.
-Test Execution of [/TestAssets/ParaBankTests.tst] completed.
-Test Execution of [/TestAssets/ParaBankTests.tst], results (failures/total): 0/2
-
-  Scenario: Create a new loan account    # com/parasoft/cucumber/soatest/parabank/parabank.feature:4
-    Given I am user 12212                # StepDefinitionLoader.java:114
-    And using funds from account 54321   # StepDefinitionLoader.java:114
-    When I create a new loan account     # StepDefinitionLoader.java:114
-    Then A new loan account should exist # StepDefinitionLoader.java:114
-
-1 Scenarios (1 passed)
-4 Steps (4 passed)
-0m10.068s
-```
+   ```
+   [INFO] -------------------------------------------------------
+   [INFO]  T E S T S
+   [INFO] -------------------------------------------------------
+   [INFO] Running com.parasoft.cucumber.soatest.parabank.ParaBankIT
+   Feature: ParaBank accounts
+     Create and use accounts in ParaBank
+   Test Execution - waiting on tests to complete.
+   Test Execution of [/TestAssets/ParaBankTests.tst] completed.
+   Test Execution of [/TestAssets/ParaBankTests.tst], results (failures/total): 0/2
+   
+     Scenario: Create a new loan account    # com/parasoft/cucumber/soatest/parabank/parabank.feature:4
+       Given I am user 12212                # StepDefinitionLoader.java:114
+       And using funds from account 54321   # StepDefinitionLoader.java:114
+       When I create a new loan account     # StepDefinitionLoader.java:114
+       Then A new loan account should exist # StepDefinitionLoader.java:114
+   
+   1 Scenarios (1 passed)
+   4 Steps (4 passed)
+   0m10.068s
+   ```
