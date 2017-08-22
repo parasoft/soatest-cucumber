@@ -1,145 +1,145 @@
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
-	"type": "object",
-	"required": [
-		"runner",
-		"stepdefs"
-	],
-	"properties": {
-		"runner": {
-			"$ref": "#/definitions/Runnable"
-		},
-		"stepdefs": {
-			"$ref": "#/definitions/StepDefinitions"
-		}
-	},
-	"definitions": {
-		"Runnable": {
-			"description": "Describes the SOAtest execution environment",
-			"type": "object",
-			"required": [
-				"executionSuite"
-			],
-			"properties": {
-				"server": {
-					"description": "Server used to execute the tests",
-					"type": "string",
-					"format": "uri",
-					"default": "http://localhost:9080"
-				},
-				"testConfiguration": {
-					"description": "The test configuration to run",
-					"type": "string",
-					"default": "soatest.builtin://Demo Configuration"
-				},
-				"executionSuite": {
-					"description": "Test suite (.tst file) that will be dynamically created to execute each scenario",
-					"$ref": "#/definitions/ExecutionSuite"
-				},
-				"assets": {
-					"description": "Resources to upload to the SOAtest server prior to execution",
-					"$ref": "#/definitions/Assets"
-				}
-			}
-		},
-		"ExecutionSuite": {
-			"type": "object",
-			"properties": {
-				"parent": {
-					"type": "string",
-					"default": "/TestAssets"
-				},
-				"name": {
-					"type": "string",
-					"default": "CucumberExecution.tst"
-				},
-				"variables": {
-					"$ref": "#/definitions/Variables"
-				}
-			}
-		},
-		"Variables": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/Variable"
-			}
-		},
-		"Variable": {
-			"type": "object",
-			"required": [
-				"name",
-				"value"
-			],
-			"properties": {
-				"name": {
-					"type": "string"
-				},
-				"value": {
-					"type": "string"
-				}
-			}
-		},
-		"Assets": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/Asset"
-			}
-		},
-		"Asset": {
-			"type": "object",
-			"required": [
-				"path"
-			],
-			"properties": {
-				"path": {
-					"description": "Local resource path of the resource to upload",
-					"type": "string"
-				},
-				"parent": {
-					"description": "Destination on the server upload",
-					"type": "string",
-					"default": "/TestAssets"
-				}
-			}
-		},
-		"StepDefinitions": {
-			"type": "array",
-			"items": {
-				"$ref": "#/definitions/StepDefinition"
-			}
-		},
-		"StepDefinition": {
-			"type": "object",
-			"required": [
-				"step",
-				"pattern",
-				"actions"
-			],
-			"properties": {
-				"step": {
-					"type": "string"
-				},
-				"pattern": {
-					"type": "string"
-				},
-				"args": {
-					"type": "integer",
-					"default": 0
-				},
-				"timeout": {
-					"type": "integer",
-					"default": 0
-				},
-				"actions": {
-					"$ref": "#/definitions/Actions"
-				}
-			}
-		},
-		"Actions": {
-			"type": "array",
-			"items": {
-				"type": "string"
-			}
-		}
-	}
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "runner",
+    "stepdefs"
+  ],
+  "properties": {
+    "runner": {
+      "$ref": "#/definitions/Runnable"
+    },
+    "stepdefs": {
+      "$ref": "#/definitions/StepDefinitions"
+    }
+  },
+  "definitions": {
+    "Runnable": {
+      "description": "Describes the SOAtest execution environment",
+      "type": "object",
+      "required": [
+        "executionSuite"
+      ],
+      "properties": {
+        "server": {
+          "description": "Server used to execute the tests",
+          "type": "string",
+          "format": "uri",
+          "default": "http://localhost:9080"
+        },
+        "testConfiguration": {
+          "description": "The test configuration to run",
+          "type": "string",
+          "default": "soatest.builtin://Demo Configuration"
+        },
+        "executionSuite": {
+          "description": "Test suite (.tst file) that will be dynamically created to execute each scenario",
+          "$ref": "#/definitions/ExecutionSuite"
+        },
+        "assets": {
+          "description": "Resources to upload to the SOAtest server prior to execution",
+          "$ref": "#/definitions/Assets"
+        }
+      }
+    },
+    "ExecutionSuite": {
+      "type": "object",
+      "properties": {
+        "parent": {
+          "type": "string",
+          "default": "/TestAssets"
+        },
+        "name": {
+          "type": "string",
+          "default": "CucumberExecution.tst"
+        },
+        "variables": {
+          "$ref": "#/definitions/Variables"
+        }
+      }
+    },
+    "Variables": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Variable"
+      }
+    },
+    "Variable": {
+      "type": "object",
+      "required": [
+        "name",
+        "value"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "Assets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Asset"
+      }
+    },
+    "Asset": {
+      "type": "object",
+      "required": [
+        "path"
+      ],
+      "properties": {
+        "path": {
+          "description": "Local resource path of the resource to upload",
+          "type": "string"
+        },
+        "parent": {
+          "description": "Destination on the server upload",
+          "type": "string",
+          "default": "/TestAssets"
+        }
+      }
+    },
+    "StepDefinitions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/StepDefinition"
+      }
+    },
+    "StepDefinition": {
+      "type": "object",
+      "required": [
+        "step",
+        "pattern",
+        "actions"
+      ],
+      "properties": {
+        "step": {
+          "type": "string"
+        },
+        "pattern": {
+          "type": "string"
+        },
+        "args": {
+          "type": "integer",
+          "default": 0
+        },
+        "timeout": {
+          "type": "integer",
+          "default": 0
+        },
+        "actions": {
+          "$ref": "#/definitions/Actions"
+        }
+      }
+    },
+    "Actions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
 }

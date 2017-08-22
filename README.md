@@ -24,11 +24,9 @@ or [CLI Runner](https://cucumber.io/docs/reference/jvm#cli-runner).
 
 ## Tutorial
 
-A [tutorial](tutorial.md) is available which provides step-by-step instructions
-for how to test a real web application by executing a
-[Cucumber](https://cucumber.io) test scenario with
-[Parasoft SOAtest](https://www.parasoft.com/product/soatest/)
-against the Parabank sample application that comes with SOAtest.
+The [tutorial](tutorial.md) provides step-by-step instructions for how to test
+a real web application by executing a [Cucumber](https://cucumber.io) test
+scenario with [Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
 [Click here](tutorial.md) to view the tutorial.
 
 
@@ -68,11 +66,17 @@ of the test execution back into Cucumber.
 Test steps can also pass data between each other by leveraging SOAtest
 test variables.
 
-1. **Identify your testing requirements.**  The first step is to determine your
-testing requirements.  For Cucumber, this involves identifying what types of
-steps you would like to support in any Cucumber test scenarios you have written
-or intend to write.  You need to identify the types of steps and high-level
-requirements for what actions would need to be performed for each step.
+First time user's should follow the [tutorial](tutorial.md).  However, the
+following steps are provided as a general reference for how to use this java
+module:
+
+1. **Identify your testing requirements.**  The first step is to identify
+what types of steps you need to support in any Cucumber test scenarios you
+have written or intend to write.  You need to identify the patterns and what
+actions would need to be performed for each step.  Cucumber can assist with
+this.  If you execute a Cucumber test scenario without implementing any
+step definitions then Cucumber will suggest which step definitions to implement,
+including patterns.
    * For more explanation about steps and step definitions,
 [click here](https://cucumber.io/docs/reference#step-definitions).
    * For an example of a Cucumber test scenario,
@@ -115,23 +119,23 @@ details on how to do this.  You should have a Maven pom.xml with the
 pom.xml:
    * Add the build.parasoft.com Maven repository which hosts releases for this
 java module:
-   ```
-   <repositories>
-     <repository>
-       <id>Parasoft</id>
-       <url>http://build.parasoft.com/maven/</url>
-     </repository>
-   </repositories>
-   ```
+     ```
+     <repositories>
+       <repository>
+         <id>Parasoft</id>
+         <url>http://build.parasoft.com/maven/</url>
+       </repository>
+     </repositories>
+     ```
    * Add the following to the "dependencies" element:
-   ```
-   <dependency>
-     <groupId>com.parasoft</groupId>
-     <artifactId>soatest-cucumber</artifactId>
-     <version>0.0.1</version>  <!-- set this to current release version -->
-     <scope>test</scope>
-   </dependency>
-   ```
+     ```
+     <dependency>
+       <groupId>com.parasoft</groupId>
+       <artifactId>soatest-cucumber</artifactId>
+       <version>0.0.1</version>  <!-- set this to current release version -->
+       <scope>test</scope>
+     </dependency>
+     ```
 
 1. **Configure step definitions.**  If needed, create the directory
 "src/test/resources/*your_java_package*" where *your_java_package* is the

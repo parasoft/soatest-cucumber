@@ -406,6 +406,9 @@ each step definition as a block of java code but instead you will be calling
 
 1. **Re-run the Cucumber scenario** now that the step definitions are defined in
 the JSON and implemented as SOAtest test cases:
+   * Make sure ParaBank is still running.
+   * Start the SOAtest Server if not running (from
+**Window> Show View> Other...> Parasoft> SOAtest Server**).
    * Right-click **parabank.feature** then select **Run As> JUnit Test**.  Click
 the **JUnit** view.  Notice the scenario ran and passed but now shows all steps
 in the test scenario as having executed instead of being skipped.
