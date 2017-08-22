@@ -31,7 +31,8 @@ view this in the address bar of the web browser that opens. ParaBank uses port
 8080 by default. If port 8080 is already in use, SOAtest incrementally searches
 for an available port, starting at 8000.
 
-1. **Create a new Maven java project** that will host our Cucumber test scenario:
+1. **Create a new Maven java project** that will host your Cucumber test
+scenario:
    * In SOAtest, select **File> New> Project**.
    * Select **Maven> Maven Project**, then click **Next**
    * Click **Next** again to accept the default project location
@@ -178,8 +179,9 @@ indicating that you need to implement the following step definitions:
 
 1. **Create a SOAtest test suite**:
    * Make sure ParaBank is running as described at the start of this tutorial.
-   * Right-click **src/test/resources/com/parasoft/example/parabank/cucumber** then
-select **New> Other...**.
+   * Right-click **src/test/resources/com/parasoft/example/parabank/cucumber**
+(the same folder that has the parabank.feature file) then select
+**New> Other...**.
    * Select **Test (.tst) File** then click **Next**.
    * For **File name** type **parabank_stepdefs.tst** then click **Next**.
    * Expand **REST**, select **Swagger** then click **Next**.
@@ -193,31 +195,32 @@ the port number if needed) then click **Finish**.
 1. **Create the SOAtest test cases** needed for implementing the step
 definitions:
    * For the Cucumber scenario, you need to make a REST API call to create an
-Account and another REST API call to verify the account was created.
+account and another REST API call to verify the account was created.  The
+following steps explain how to do this.
    * In the **Test Case Explorer**, expand **parabank.cucumber**, then expand
 **src/test/resources/com/parasoft/example/parabank/cucumber**.
    * Double click **parabank_stepdefs.tst** to open the test suite then expand
 **Test Suite**.
-   * Right-click **Test Suite** then select **Add New> Test Suite...**
-   * Select **Empty** then click **Finish**.
+   * Right-click **Test Suite** then select **Add New> Test Suite...**,
+select **Empty** then click **Finish**.
    * Double click the new test suite that was created, change **Name** to
 **Test Steps**, then click **File> Save**.
-   * Expand the test suite that was created earlier, the one named
-**/parabank/services/bank/swagger.yaml**.  Expand the child suite named
-**/createAccount**, right-click the test named **/createAccount - POST** then
-select **Copy**.
-   * Right-click the suite you just created named **Test Steps** then select
-**Paste**.
+   * Expand the test suite named **/parabank/services/bank/swagger.yaml** which
+contains the unit tests that the wizard originally generated for each operation
+in ParaBank's REST API.
+   * Expand the child suite named **/createAccount**, right-click the test named
+**/createAccount - POST** then select **Copy**.  Right-click the suite you just
+created named **Test Steps** then select **Paste**.
    * Similarly, expand the suite named **/accounts/{accountId}**, right-click
 the test named **/accounts/{accountId} - GET** then select **Copy**.
 Right-click **Test Steps** again then select **Paste**.
 
 1. **Configure the SOAtest test cases** to use values from the Cucumber
 scenario:
-   * The REST API call to create an account requires a customer ID, account
-type, and the ID of an account from which to transfer funds.  In the REST
-Clients you will set those parameters as variables.  Later, you will define
-how the values of those variables are set.
+   * Creating an account involves making a REST API call with parameters for
+customer ID, account type, and the ID of an account from which to transfer
+funds.  You need to configure those values in the REST Clients as variables.
+Later, you will define how the values of those variables are set.
    * Under **Test Steps**, double-click **/createAccount - POST**, update the
 test as follows then click **File> Save**:
      * Change **Name** to **CreateAccount**
@@ -259,14 +262,14 @@ click **OK**:
          }
        }
        ```
-     * Click the **Tree** tab, select **id** then click **Extract Element**
+     * Click the **Tree** tab, select **id** then click **Extract Element**.
      * Select the newly created extraction then click **Modify**.
      * Select **Data Source Column**, change **Custom column name** to
        **accountId** then click **OK**.
    * Under **Test Steps**, double-click **/accounts/{accountId} - GET**, update
 the test as follows then click **File> Save**:
-     * Change **Name** to **GetAccountInfo**
-     * Click the **Path** tab and set **accountId** to ${accountId}
+     * Change **Name** to **GetAccountInfo**.
+     * Click the **Path** tab and set **accountId** to ${accountId}.
    * Create a new **JSON Assertor** as follows:
      * Right-click **GetAccountInfo** then select **Add Output...**
      * On the left, select **Reponse> Traffic**.
@@ -288,12 +291,13 @@ the test as follows then click **File> Save**:
      * Select **Value Assertions> String Comparison Assertion** then click **Next**.
      * Select **id** then click **Finish**.
      * Set the **Expected Value** to **${expectedAccountType}**.
-     * Expand  **Options** (at the very bottom) and enable **Trim content** and
+     * Expand  **Options** (at the very bottom) then enable **Trim content** and
 **Ignore case**
 
 1. **Define the step definitions, linking them to the SOAtest test cases:**
    * Switch back to the **Java** perspective again.
-   * Right-click **src/test/resources/com/parasoft/example/parabank/cucumber** then
+   * Right-click **src/test/resources/com/parasoft/example/parabank/cucumber**
+(the same folder containing parabank.feature and parabank_stepdefs.tst) then
 select **New> File**.
    * For **File name** type type **parabank_stepdefs.json** then click **Finish**.
    * In the **parabank_stepdefs.json** file, add then following then click
@@ -364,14 +368,21 @@ select **New> File**.
    * Take note of the following:
      * **server** points to the address of the SOAtest server, your local
 SOAtest that is used for this tutorial.
-     * **executionSuite** defines the tst that will be dynamically created
-on the SOAtest server in order to execute the Cucumber scenario, including
-the environment variables needed by any tests tests (correct the port number for
-your ParaBank if needed).
+     * **assets** defines any files in your Cucumber java project that should be
+automatically deployed to the SOAtest server.  This should include any tst files
+containing tests needed for executing your step definitions.
+     * **executionSuite** defines the SOAtest test suite (.tst) file that will
+be dynamically created on-the-fly by the SOAtest server in order to execute
+the steps in any Cucumber test scenarios.
+     * **variables** defines environment variables that should be created in
+the dynamically created test suite prior to execution (correct the port number
+for your ParaBank if needed).
      * **stepdefs** has the pattern for each step definition, the ones Cucumber
 originally indicated that you needed to implement.
-     * **actions** sets variables needed by the REST Clients and copies REST
-Clients needed for executing the different steps.
+     * **actions** defines what happens when the step definition is instructed
+to execute.  It can set variables in the test suite or copy tests or scenarios
+from a pre-existing test suite, like the ones you created earlier for creating
+and validating an account.
    * Update **ParaBankStepDefinitions.java**.  Normally you would implement
 each step definition as a block of java code but instead you will be calling
 **StepDefinitionLoader.loadStepDefinitions()** to load them from the
