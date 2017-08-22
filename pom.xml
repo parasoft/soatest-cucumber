@@ -3,7 +3,7 @@
 
   <groupId>com.parasoft</groupId>
   <artifactId>soatest-cucumber</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2-SNAPSHOT</version>
 
   <name>soatest-cucumber</name>
   <url>https://github.com/parasoft/soatest-cucumber</url>
@@ -24,7 +24,7 @@
     <connection>scm:git:https://github.com/parasoft/soatest-cucumber.git</connection>
     <developerConnection>scm:git:https://github.com/parasoft/soatest-cucumber.git</developerConnection>
     <url>https://github.com/parasoft/soatest-cucumber/tree/${project.scm.tag}</url>
-    <tag>v0.0.1</tag>
+    <tag>master</tag>
   </scm>
 
   <properties>
