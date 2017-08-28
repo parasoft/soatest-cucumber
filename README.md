@@ -14,10 +14,12 @@ eliminating the labor and difficulty of manually coding step definitions.
 
 ## Introduction
 
-This java module enables you to define step definitions within a JSON document.
-It will dynamically construct and configure a SOAtest test suite based on steps
-in a Cucumber feature file, then automatically execute that test suite on a SOAtest
-server.  This module has no dependencies on JUnit but can be invoked from either
+This java module enables you to use a JSON document to define step definitions
+that are linked to previously-defined SOAtest test cases.  As the Cucumber
+scenarios are executed, the module will dynamically construct and configure a 
+SOAtest test suite based on steps in the Cucumber feature file, then
+automatically execute that test suite on a SOAtest server.
+This module has no dependencies on JUnit but can be invoked from either
 Cucumber's [JUnit Runner](https://cucumber.io/docs/reference/jvm#junit-runner)
 or [CLI Runner](https://cucumber.io/docs/reference/jvm#cli-runner).
 
@@ -36,13 +38,14 @@ scenario with [Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
 * [Apache Maven](https://maven.apache.org/)
 
 
-## How to Use
+## How it Works
 
-When writing step definitions for Cucumber, you typically need to write code
+When writing [step definitions](https://cucumber.io/docs/reference#step-definitions)
+for Cucumber, you typically need to write code
 that defines what should happen when a test step that matches the definition
 is executed.  This module simplifies the creation of step definitions by
 allowing you to create SOAtest tests as the implementation for what should
-happen at each step.  Think of each step definition as a map between a pattern
+happen at each step.  Think of each step definition as a map between that step
 and a reusable SOAtest test or test suite that should get run when that step
 gets executed.
 
@@ -51,8 +54,8 @@ that makes a call to a REST API.  A second step definition might reference
 a SOAtest REST Client with a chained JSON Assertor that validates data in a
 response from a different REST API.  A third step definition might reference
 a SOAtest DB Tool with a chained XML Assertor that executes a DB query and
-validates data in the result set.  Step definitions can reference individual
-tests or a test suite that contains a number of tests within it.
+validates data in the result set.  Step definitions can reference an individual
+SOAtest test or a test suite that contains a number of tests within it.
 
 You will create a library of one or more SOAtest .tst files that contain
 a number of tests and/or test suites that will be referenced by the step
@@ -66,57 +69,20 @@ of the test execution back into Cucumber.
 Test steps can also pass data between each other by leveraging SOAtest
 test variables.
 
-First time user's should follow the [tutorial](tutorial.md).  However, the
+
+## General Instructions for Use
+
+First time users should follow the [tutorial](tutorial.md).  However, the
 following steps are provided as a general reference for how to use this java
 module:
 
-1. **Identify your testing requirements.**  The first step is to identify
-what types of steps you need to support in any Cucumber test scenarios you
-have written or intend to write.  You need to identify the patterns and what
-actions would need to be performed for each step.  Cucumber can assist with
-this.  If you execute a Cucumber test scenario without implementing any
-step definitions then Cucumber will suggest which step definitions to implement,
-including patterns.
-   * For more explanation about steps and step definitions,
-[click here](https://cucumber.io/docs/reference#step-definitions).
-   * For an example of a Cucumber test scenario,
-[click here](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank.feature).
-
-1. **Create a SOAtest test suite (.tst).**  Now that you've identified what
-types of actions are needed for your step definitions, you can being
-implementing those actions as SOAtest test cases.  You must create at least one
-SOAtest test suite (.tst) file in Parasoft SOAtest that contains the tests or
-scenarios for executing each step definition.  Please take note the following:
-   * You are effectively creating a library of re-usable test cases and
-scenarios.  This java modules will copy test cases from your SOAtest tst suite
-and configure them dynamically depending on what steps appear in the cucumber
-scenario that is being executed.  In a sense, this is no different than how step
-definitions in Cucumber normally work.  The only difference is that you are
-defining a collection of SOAtest test cases instead of a collection of code
-snippets.
-   * For any fields in your SOAtest test cases where the value would need to be
-provided by a step in your Cucucumber scenario, the field value should have a
-variable reference like ${varName}.  The values of such variables will not be
-set in the tst file but will be injected by this java module when the Cucumber
-scenario is being executed.  This means that the test cases and scenarios you
-are creating in SOAtest shouldn't necessarily be able to run as-is
-since the values of any variables are not being set by anything in the tst file.
-   * For reference, download and open this
-[example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.tst)
-test suite in SOAtest.  Notice how the query parameters and JSON assertions are
-configured using various variables that are not actually defined in the tst
-file.
-   * Please refer to the SOAtest User's Guide for detail and best practices for
-creating re-usable, modular test suites.  Search for
-"Reusing/Modularizing Test Suites".
-
-1. **Create a Cucumber java project.**  Follow the steps to create and
-configure a Maven java project for running cucumber tests.  Read the description
-from the
+1. **Create a Cucumber java project.**  Follow the normal steps to create and
+configure a Maven java project for running cucumber tests; you can read the
+description from the
 [Cucumber java documentation](https://cucumber.io/docs/reference/jvm#java) for
-details on how to do this.  You should have a Maven pom.xml with the
-"info.cukes:cucumber-java8" dependency.  Additionally, add the following to your
-pom.xml:
+details on how to do this.  You will need a Maven pom.xml with the
+"info.cukes:cucumber-java8" dependency.  Additionally, you will need to do the
+following in your pom.xml:
    * Add the build.parasoft.com Maven repository which hosts releases for this
 java module:
      ```
@@ -127,7 +93,8 @@ java module:
        </repository>
      </repositories>
      ```
-   * Add the following to the "dependencies" element:
+   * Add the following to the "dependencies" element (note that you will need
+   to update the version number to the current release version):
      ```
      <dependency>
        <groupId>com.parasoft</groupId>
@@ -137,30 +104,122 @@ java module:
      </dependency>
      ```
 
-1. **Configure step definitions.**  If needed, create the directory
-"src/test/resources/*your_java_package*" where *your_java_package* is the
-name java package you decide to use for your project.  Add the following files
-similar to this
-[example](src/it/resources/com/parasoft/cucumber/soatest/parabank/):
-   * Copy any Cucumber feature files containing the scenarios you wish to
-execute.
-   * Copy the SOAtest tst file(s) containing the actions for your step
-definitions.  Include any other resources required for your SOAtest test cases
-(external file references).
-   * Create the JSON document for the step definitions as described by this
-[JSON schema](src/main/schema/stepdefs.json) like
-[this example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.json).
-The JSON schema describes the structure and meaning of values but please note:
-     * The "runner" includes the URL of the SOAtest server, parameters for
-initializing the SOAtest test suite that will be dynamically created and
-executed, and the paths of any dependent resources including any SOAtes test
-suite (.tst) files having test cases needed for performing actions for the step
-definitions.
-     * The "stepdefs" array describes the list of step definitions, their
-patterns, arguments, and SOAtest test cases which should be executed for each
-pattern.
-     * Each step definition has an array of actions which can include setting
-variables or copying test cases.
+1. **Create a library of one or more SOAtest test suite (.tst) files.**  Create
+one or more SOAtest test suite (.tst) files in Parasoft SOAtest that contain the
+tests or scenarios for executing each step definition.  The individual tests or
+test suites within a single .tst file do not need to be related to each other or
+run successfully together within a single .tst.  They are building blocks that
+will get put together into larger scenarios that are defined by the Cucumber
+feature files.
+
+Test steps may depend on data values that get passed to them directly
+from the Cucumber scenario or from a previous test step.  For any fields in
+your SOAtest test cases where the value needs to be provided dynamically, the
+field value should have a variable reference like ${varName}.  The values
+of such variables will not be set directly in the tst file but will
+be injected by this java module when the Cucumber scenario is being executed
+or when a Data Bank runs and saves data into a custom column.
+This means that the test cases and scenarios you are creating in SOAtest
+won't necessarily be able to run as-is since the values of any variables
+present are not being set by anything in the tst file.
+
+For variables that are injected from the Cucumber scenario file, you will need
+to define a [set action](link TBD) within your step definition that will cause
+a SOAtest test variable to be created and initialized with the value from the
+scenario.  For variables that are created by a Data Bank tool, you will need
+to ensure that the column name defined by the Data Bank and the column name
+referenced by the following test step are the same.
+
+For reference, download and open this
+[example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.tst)
+test suite in SOAtest.  Notice how the query parameters and JSON assertions are
+configured using various variables that are not actually defined in the tst
+file.
+
+1. **Create the JSON step definitions file.**  This
+file contains general properties that will be used when executing
+Cucumber test scenarios, as well as the specific step definitions that map
+test steps to SOAtest test cases.  Here is a description of the properties
+in that file:
+   * runner - Specifies properties related to the location and configuration
+   of the SOAtest server and the SOAtest .tst file that gets dynamically
+   created as the Cucumber scenarios execute.
+     * server - Specifies the base URL of the SOAtest server
+     that will be used to execute the SOAtest scenarios.  It
+     should include protocol, host, and port, such as
+     "https://localhost:9443".
+     * executionSuite - Specifies characteristics of the
+     SOAtest .tst file that will be dynamically created on
+     the SOAtest server as the Cucumber scenario executes.
+       * parent - The directory on the SOAtest server
+       where the dynamically-created SOAtest .tst file will
+       be saved.
+       * name - The name of the SOAtest .tst file
+       that will be dynamically created on the SOAtest server.
+       * variables - Specifies environment variables that
+       will be automatically configured within the
+       dynamically-created SOAtest .tst file.  This is an
+       array where each object in the array has the following
+       properties:
+         * name - The name of the environment variable.
+         * value - The value of the environment variable.
+      * testConfiguration - Specifies the SOAtest test
+      configuration to use when the dynamically-created
+      SOAtest .tst file is executed.
+    * assets - Specifies test assets that will be copied to
+    the SOAtest server.  This is used to configure the SOAtest
+    server with the library of .tst files used by the
+    Cucumber scenarios.  This is an array where each object
+    in the array has the following properties:
+      * path - The name of the test asset (usually a .tst file).
+      * parent - The directory on the SOAtest server to which
+      the test asset will be copied.
+   * stepdefs
+     * step - The type of step.  Possible values are "Given",
+     "When", "Then", "And", and "But".
+     * pattern - The pattern used to link the step defintion
+     to all the matching test steps.
+     * args - The number of arguments represented by the
+     capture groups in the pattern.  For example, if two
+     capture groups are defined in the pattern, then the
+     value should be set to 2.
+     * actions - Specifies the actions that should be taken
+     when a test step that matches this step definition is
+     executed.  There are two possible actions that can be
+     used:
+       * set - Specifies that a test
+       variable with a specific name should be created within
+       the dynamically-created .tst file on the SOAtest
+       server.  The format for this action is "set:variableName"
+       where "variableName" is the name of the test variable
+       that should be created.  The value will be taken from
+       the value in the Cucumber scenario that matches the
+       corresponding capture group.  If multiple capture
+       groups are defined, then multiple set actions should
+       be defined.  The first set action will be matched to
+       the first capture group, the second set action will be
+       matched to the second capture group, and so on.
+       * copy - Specifies a test case or test suite from the
+       library of SOAtest .tst files that should be linked to
+       this test step.  When the test step executes, the
+       specified test or test suite will be copied from the
+       .tst file in the libary into the .tst file that is
+       being dynamically created on the SOAtest server.  The
+       format for this action is "copy:idOfTest" where
+       "idOfTest" specifies where the test case is located
+       within the library of tests on the SOAtest server.
+       The id specifies both the path to the .tst file as
+       well as the path within the .tst file to the specific
+       test case or test suite that should be used.  For
+       example, "/TestAssets/parabank_stepdefs.tst/Test Suite/Test Steps/CreateAccount"
+       refers to the .tst file parabank_stepdefs.tst that
+       appears within the TestAssets project.  The top-level
+       test suite within that .tst file is named "Test Suite"
+       and contains a sub suite called "Test Steps" that
+       contains a specific test called "CreateAccount".
+
+A JSON schema that describes the structure
+of the file can be found [here](src/main/schema/stepdefs.json).
 
 1. **Loading step definitions.**  Create an "src/test/java/*your_java_package*"
 source directory with a single Java class that extends
