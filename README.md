@@ -112,7 +112,7 @@ run successfully together within a single .tst.  They are building blocks that
 will get put together into larger scenarios that are defined by the Cucumber
 feature files.
 
-Test steps may depend on data values that get passed to them directly
+   Test steps may depend on data values that get passed to them directly
 from the Cucumber scenario or from a previous test step.  For any fields in
 your SOAtest test cases where the value needs to be provided dynamically, the
 field value should have a variable reference like ${varName}.  The values
@@ -123,14 +123,14 @@ This means that the test cases and scenarios you are creating in SOAtest
 won't necessarily be able to run as-is since the values of any variables
 present are not being set by anything in the tst file.
 
-For variables that are injected from the Cucumber scenario file, you will need
+   For variables that are injected from the Cucumber scenario file, you will need
 to define a [set action](link TBD) within your step definition that will cause
 a SOAtest test variable to be created and initialized with the value from the
 scenario.  For variables that are created by a Data Bank tool, you will need
 to ensure that the column name defined by the Data Bank and the column name
 referenced by the following test step are the same.
 
-For reference, download and open this
+   For reference, download and open this
 [example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.tst)
 test suite in SOAtest.  Notice how the query parameters and JSON assertions are
 configured using various variables that are not actually defined in the tst
@@ -218,7 +218,7 @@ in that file:
        and contains a sub suite called "Test Steps" that
        contains a specific test called "CreateAccount".
 
-A JSON schema that describes the structure
+   A JSON schema that describes the structure
 of the file can be found [here](src/main/schema/stepdefs.json).
 
 1. **Loading step definitions.**  Create an "src/test/java/*your_java_package*"
