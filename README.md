@@ -76,34 +76,6 @@ First time users should follow the [tutorial](tutorial.md).  However, the
 following steps are provided as a general reference for how to use this java
 module:
 
-1. **Create a Cucumber java project.**  Follow the normal steps to create and
-configure a Maven java project for running cucumber tests; you can read the
-description from the
-[Cucumber java documentation](https://cucumber.io/docs/reference/jvm#java) for
-details on how to do this.  You will need a Maven pom.xml with the
-"info.cukes:cucumber-java8" dependency.  Additionally, you will need to do the
-following in your pom.xml:
-   * Add the build.parasoft.com Maven repository which hosts releases for this
-java module:
-     ```
-     <repositories>
-       <repository>
-         <id>Parasoft</id>
-         <url>http://build.parasoft.com/maven/</url>
-       </repository>
-     </repositories>
-     ```
-   * Add the following to the "dependencies" element (note that you will need
-   to update the version number to the current release version):
-     ```
-     <dependency>
-       <groupId>com.parasoft</groupId>
-       <artifactId>soatest-cucumber</artifactId>
-       <version>0.0.1</version>  <!-- set this to current release version -->
-       <scope>test</scope>
-     </dependency>
-     ```
-
 1. **Create a library of one or more SOAtest test suite (.tst) files.**  Create
 one or more SOAtest test suite (.tst) files in Parasoft SOAtest that contain the
 tests or scenarios for executing each step definition.  The individual tests or
@@ -221,20 +193,49 @@ in that file:
    A JSON schema that describes the structure
 of the file can be found [here](src/main/schema/stepdefs.json).
 
-1. **Loading step definitions.**  Create an "src/test/java/*your_java_package*"
-source directory with a single Java class that extends
-cucumber.api.java8.GlueBase or one if its subclasses like cucumber.api.java8.En
-as shown in the
+1. **Create a Cucumber java project.**  Follow the normal steps to create and
+configure a Maven java project for running cucumber tests; you can read the
+description from the
+[Cucumber java documentation](https://cucumber.io/docs/reference/jvm#java) for
+details on how to do this.  You will need a Maven pom.xml with the
+"info.cukes:cucumber-java8" dependency.  Additionally, you will need to do the
+following in your pom.xml:
+   * Add the build.parasoft.com Maven repository which hosts releases for this
+java module:
+     ```
+     <repositories>
+       <repository>
+         <id>Parasoft</id>
+         <url>http://build.parasoft.com/maven/</url>
+       </repository>
+     </repositories>
+     ```
+   * Add the following to the "dependencies" element (note that you will need
+   to update the version number to the current release version):
+     ```
+     <dependency>
+       <groupId>com.parasoft</groupId>
+       <artifactId>soatest-cucumber</artifactId>
+       <version>0.0.1</version>  <!-- set this to current release version -->
+       <scope>test</scope>
+     </dependency>
+     ```
+
+   Create a "src/test/java/*your_java_package*" source directory with a single 
+Java class that extends cucumber.api.java8.GlueBase or one if its subclasses
+(suc as cucumber.api.java8.En) as shown in the
 [lambda expressions](https://cucumber.io/docs/reference/jvm#lambda-expressions-java-8)
-example.  However, don't manually code any step definitions in the constrcutor.
+example.  However, don't manually code any step definitions in the constructor.
 Instead, add a single line to the constructor which calls
 StepDefinitionLoader.loadStepDefinitions() as seen in
 [this example](src/it/java/com/parasoft/cucumber/soatest/parabank/ParaBankStepDefinitions.java)
 
-1. **Create a JUnit suite.**  This is only required if you wish to use
-Cucumber's JUnit Runner as opposed to their CLI Runner.  Under
-"src/test/java/*your_java_package*" create an empty java class annotated with
-"@RunWith(Cucumber.class)" as described
+   Put your step definition file and the library of SOAtest .tst files in the
+"src/test/resources/*your_java_package*" source directory.
+
+   (Optional) If you wish to use Cucumber's JUnit Runner as opposed to their
+CLI Runner, then under "src/test/java/*your_java_package*" create an empty
+Java class annotated with "@RunWith(Cucumber.class)" as described
 [here](https://cucumber.io/docs/reference/jvm#junit-runner).  Also see
 [this example](src/it/java/com/parasoft/cucumber/soatest/parabank/ParaBankIT.java).
 
@@ -242,11 +243,10 @@ Cucumber's JUnit Runner as opposed to their CLI Runner.  Under
 ## How to Execute
 
 1. **Start your Parasoft SOAtest Server.**  Make sure your SOAtest server is
-accessible at the server URL defined in the JSON document you created earlier
-for your step definitions.
+accessible at the server URL defined in the JSON step definitions file.
 
-1. **Deploy your application under test**, making sure it is acessible from the host
-where the SOAtest Server is deployed
+1. **Deploy your application under test.**  It must be accessible from the host
+where the SOAtest Server is deployed.
 
 1. **Run your Cucumber scenario.**  From Maven this would typically be
 "mvn clean test" to run JUnits under "src/test/java" or "mvn clean verify" if
@@ -263,11 +263,11 @@ instructions for how this example was constructed, please follow the
 these steps:
 1. Checkout and build ParaBank.  View the README on the
 [ParaBank project page](https://github.com/parasoft/parabank)
-for exact instructions.
+for instructions.
 1. Deploy the parabank.war into a Tomcat Server on the same machine that has
-SOAtest server.  In your tomcat installation directory, edit the conf/server.xml
+SOAtest server.  In your Tomcat installation directory, edit the conf/server.xml
 to listen on port 8090 instead of 8080.
-1. Start your tomcat server and verify you can access ParaBank on
+1. Start your Tomcat server and verify you can access ParaBank on
 http://localhost:8090/parabank
 1. Start your SOAtest server.
 1. Checkout this project and run "mvn -P integration-tests clean verify".  You
