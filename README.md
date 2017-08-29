@@ -228,7 +228,7 @@ Java class that extends cucumber.api.java8.GlueBase or one if its subclasses
 example.  However, don't manually code any step definitions in the constructor.
 Instead, add a single line to the constructor which calls
 StepDefinitionLoader.loadStepDefinitions() as seen in
-[this example](src/it/java/com/parasoft/cucumber/soatest/parabank/ParaBankStepDefinitions.java)
+[this example](src/it/java/com/parasoft/cucumber/soatest/parabank/ParaBankStepDefinitions.java).
 
    Put your step definition file and the library of SOAtest .tst files in the
 "src/test/resources/*your_java_package*" source directory.

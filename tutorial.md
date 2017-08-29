@@ -1,8 +1,8 @@
 # Parasoft SOAtest-Cucumber Tutorial
 
-This tutorial provides step-by-step instructions for how to test a real web
-application by executing a [Cucumber](https://cucumber.io) test scenario with
-[Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
+This tutorial provides step-by-step instructions for how to test the web
+application Parabank by executing a [Cucumber](https://cucumber.io) test scenario
+using [Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
 
 
 ## Steps
@@ -11,20 +11,20 @@ application by executing a [Cucumber](https://cucumber.io) test scenario with
 
 1. **Install Eclipse M2E** as follows:
    * Select **Help> Install New Software..**
-   * In **Work with** type **http://download.eclipse.org/releases/neon** then press the **Enter** key
+   * In **Work with** type **http://download.eclipse.org/releases/neon** then press the **Enter** key.
    * Wait for the list of Categories to load.  This may take a minute or two.
-   * Expand **General Purpose Tools**, select **m2e - Maven Integration for Eclipse**, then click **Next**
-   * Click **Next** again, accept the open source license agreement, then click **Finish**
-   * Wait for the software to install then click **Yes** to restart SOAtest when prompted.
+   * Expand **General Purpose Tools**, select **m2e - Maven Integration for Eclipse**, then click **Next**.
+   * Click **Next** again, accept the open source license agreement, then click **Finish**.
+   * Wait for the plugin to install then click **Yes** to restart SOAtest when prompted.
 
 1. **Set up the ParaBank Demo application** as described at the beginning of the
 SOAtest tutorial.  Typical steps:
    * In SOAtest, select **File> New> Project**.
-   * Select **SOAtest> ParaBank Example Project**, then click **Next**
+   * Select **SOAtest> ParaBank Example Project**, then click **Next**.
    * Enter a project name (e.g., ParaBank), then click **Finish**.
    * In the **Servers** view (if it’s not visible, choose **Window> Show View>
 Other> Server> Servers**), verify that the ParaBank Tomcat Server is started
-and synchronized. It might take about a minute for the server to start and
+and synchronized. It could take a minute for the server to start and
 synchronize.
    * When ParaBank launches, be sure to note what port it is using.  You can
 view this in the address bar of the web browser that opens. ParaBank uses port
@@ -34,14 +34,15 @@ for an available port, starting at 8000.
 1. **Create a new Maven java project** that will host your Cucumber test
 scenario:
    * In SOAtest, select **File> New> Project**.
-   * Select **Maven> Maven Project**, then click **Next**
-   * Click **Next** again to accept the default project location
-   * Verify **maven-archetype-quickstart** is selected then click **Next**
-   * Type the following then click **Finish** to complete the wizard
+   * Select **Maven> Maven Project**, then click **Next**.
+   * Click **Next** again to accept the default project location.
+   * Verify **maven-archetype-quickstart** is selected then click **Next**.
+   * Type the following then click **Finish** to complete the wizard:
      * **Group Id:** com.parasoft.example
      * **Artifact Id:** parabank.cucumber
      * **Version:** 0.0.1-SNAPSHOT
      * **Package:** com.parasoft.example.parabank.cucumber
+   * Click **Finish**.
 
 1. Open the Java perspective as follows:
    * Click **Window> Perspective> Open Perspective> Other...**
@@ -50,7 +51,7 @@ scenario:
 1. **Configure the pom.xml** with the dependencies required for Cucumber:
    * In the **Package Explorer**, expand the
 **parabank.cucumber** project then double-click the **pom.xml** file.
-Make the following edits then click then click **File> Save**:
+Make the following edits then select **File> Save**:
    * Add the following **repositories** element to the pom.xml before
 ```</project>```:
      ```
@@ -93,7 +94,7 @@ Make the following edits then click then click **File> Save**:
 
 1. **Build the project.**  Select **Project> Build Automatically** (if not
 already enabled) then wait a minute for the project to build.  During this time,
-Eclipse M2E will be downloading the dependencies that were added to the pom.xml
+Eclipse M2E will download the dependencies that were added to the pom.xml
 in the previous step.  You can click the **Progress** view to check the build
 progress.  After the build has finished, verify no errors are shown in the
 **Problems** view.
@@ -104,14 +105,9 @@ progress.  After the build has finished, verify no errors are shown in the
    * Right-click **AppTest.java** then select **Delete**.  This file is not
 used as part of this tutorial.
    * Right-click **com.parasoft.example.parabank.cucumber** then select
-**New> Class**.  Type the following then click **Finish** to complete the
-wizard:
-     * **Name:** ParaBankStepDefinitions
-     * **Interfaces:** Select **Add..**, type **cucumber.api.java8.GlueBase**, then click **OK**
-   * Right-click **com.parasoft.example.parabank.cucumber** then select
 **New> Class**.  For **Name** type **ParaBankSuite** then click
 **Finish** to complete the wizard.
-   * Update **ParaBankSuite.java** to look as follows then click **File> Save**:
+   * Update **ParaBankSuite.java** to look as follows then select **File> Save**:
      ```
      package com.parasoft.example.parabank.cucumber;
 
@@ -130,11 +126,11 @@ wizard:
    * In the **parabank.cucumber** project expand **src**, right-click **test**,
 then select **New> Folder**.
    * For **Folder name** type
-**resources/com/parasoft/example/parabank/cucumber** then click **Finish**
-   * Right-click the new folder that was created, the most deeply nested one
-named **cucumber**, then select **New> File**.
+**resources/com/parasoft/example/parabank/cucumber** and click **Finish**.
+   * Right-click the new folder that was created (the most deeply nested one
+named **cucumber**) and select **New> File**.
    * For **File name** type type **parabank.feature** then click **Finish**.
-   * In the **parabank.feature** file, add then following then click
+   * In the **parabank.feature** file, add the following then select
 **File> Save**:
      ```
      Feature: ParaBank accounts
@@ -148,10 +144,11 @@ named **cucumber**, then select **New> File**.
      ```
 
 1. **Run the Cucumber scenario.**
-   * Right-click **parabank.feature** then select **Run As> JUnit Test**.  Click
-the **JUnit** view.  Notice the scenario ran and passed but shows all steps in
-the test scenario were skipped.
-   * Click the **Console** view and observe the following message from Cucumber,
+   * Right-click **parabank.feature** then select **Run As> Run configurations**.
+Right-click on **JUnit** and choose **New**.  Select **JUnit 4** as the
+Test runner and then click **Run**.  Review the results in the **JUnit** view.  
+Notice that the scenario ran and passed but all steps in the test scenario were skipped.
+   * Click on the **Console** view and observe the following message from Cucumber,
 indicating that you need to implement the following step definitions:
      ```
      You can implement missing steps with the snippets below:
@@ -190,21 +187,21 @@ the port number if needed) then click **Finish**.
 
 1. Open the SOAtest perspective as follows:
    * Click **Window> Perspective> Open Perspective> Other...**
-   * Select **SOAtest** then click **OK**
+   * Select **Parasoft SOAtest** then click **OK**
 
 1. **Create the SOAtest test cases** needed for implementing the step
-definitions:
-   * For the Cucumber scenario, you need to make a REST API call to create an
-account and another REST API call to verify the account was created.  The
-following steps explain how to do this.
+definitions. As the implementation for the test steps, you need to make a test
+that calls a REST API to create an account and another test that calls a
+REST API to verify that the account was created.
+The following steps explain how to do this:
    * In the **Test Case Explorer**, expand **parabank.cucumber**, then expand
 **src/test/resources/com/parasoft/example/parabank/cucumber**.
-   * Double click **parabank_stepdefs.tst** to open the test suite then expand
+   * If not already open, double-click **parabank_stepdefs.tst** to open the test suite then expand
 **Test Suite**.
    * Right-click **Test Suite** then select **Add New> Test Suite...**,
 select **Empty** then click **Finish**.
-   * Double click the new test suite that was created, change **Name** to
-**Test Steps**, then click **File> Save**.
+   * Double-click the new test suite that was created, change **Name** to
+**Test Steps**, then select **File> Save**.
    * Expand the test suite named **/parabank/services/bank/swagger.yaml** which
 contains the unit tests that the wizard originally generated for each operation
 in ParaBank's REST API.
@@ -216,13 +213,12 @@ the test named **/accounts/{accountId} - GET** then select **Copy**.
 Right-click **Test Steps** again then select **Paste**.
 
 1. **Configure the SOAtest test cases** to use values from the Cucumber
-scenario:
-   * Creating an account involves making a REST API call with parameters for
+scenario. The REST API to create an account requires parameters for
 customer ID, account type, and the ID of an account from which to transfer
 funds.  You need to configure those values in the REST Clients as variables.
 Later, you will define how the values of those variables are set.
    * Under **Test Steps**, double-click **/createAccount - POST**, update the
-test as follows then click **File> Save**:
+test as follows then select **File> Save**:
      * Change **Name** to **CreateAccount**
      * Click the **Query** tab the configure the query parameters as follows:
         * **customerId:** ${customerId}
@@ -245,12 +241,15 @@ click **OK**:
             }
             ```
         * **fromAccountId:** ${fromAccountId}
+     * Click the **HTTP Options** tab and then click
+**HTTP Headers**.  Click **Add** and enter **Accept** for Name and
+**application/json** for Value.  Click **OK**.
    * Create a new **JSON Data Bank** as follows:
      * Right-click **CreateAccount** then select **Add Output...**
      * On the left, select **Reponse> Traffic**.
      * On the right, under **New Tool**, select **JSON Data Bank** then click
 **Finish**.
-   * Configure the new **JSON Data Bank** as follows then click **File> Save**:
+   * Configure the new **JSON Data Bank** as follows:
      * Click the **Literal** tab then type the following under **Literal**:
        ```
        {
@@ -266,16 +265,20 @@ click **OK**:
      * Select the newly created extraction then click **Modify**.
      * Select **Data Source Column**, change **Custom column name** to
        **accountId** then click **OK**.
+     * Select **File> Save**.
    * Under **Test Steps**, double-click **/accounts/{accountId} - GET**, update
-the test as follows then click **File> Save**:
+the test as follows then select **File> Save**:
      * Change **Name** to **GetAccountInfo**.
      * Click the **Path** tab and set **accountId** to ${accountId}.
+     * Click the **HTTP Options** tab and then click
+**HTTP Headers**.  Click **Add** and enter **Accept** for Name and
+**application/json** for Value.  Click **OK**.
    * Create a new **JSON Assertor** as follows:
      * Right-click **GetAccountInfo** then select **Add Output...**
-     * On the left, select **Reponse> Traffic**.
+     * On the left, select **Response> Traffic**.
      * On the right, under **New Tool**, select **JSON Assertor** then click
 **Finish**.
-   * Configure the new **JSON Assertor** as follows then click **File> Save**:
+   * Configure the new **JSON Assertor** as follows:
      * Click the **Expected JSON** tab then type the following under **Literal**:
        ```
        {
@@ -289,19 +292,21 @@ the test as follows then click **File> Save**:
        ```
      * Click the **Configuration** tab then click **Add...** on the lower left.
      * Select **Value Assertions> String Comparison Assertion** then click **Next**.
-     * Select **id** then click **Finish**.
+     * Select **type** then click **Finish**.
      * Set the **Expected Value** to **${expectedAccountType}**.
      * Expand  **Options** (at the very bottom) then enable **Trim content** and
 **Ignore case**
+     * Select **File> Save**.
 
-1. **Define the step definitions, linking them to the SOAtest test cases:**
+1. **Create the step definitions, linking them to the SOAtest test cases:**
    * Switch back to the **Java** perspective again.
    * Right-click **src/test/resources/com/parasoft/example/parabank/cucumber**
 (the same folder containing parabank.feature and parabank_stepdefs.tst) then
 select **New> File**.
    * For **File name** type type **parabank_stepdefs.json** then click **Finish**.
    * In the **parabank_stepdefs.json** file, add then following then click
-**File> Save**:
+**File> Save** (update the port number for your Parabank server in the 
+variables element if needed):
      ```
      {
        "runner": {
@@ -312,11 +317,11 @@ select **New> File**.
            "variables": [
              {
                "name": "SWAGGER",
-               "value": "http://localhost:8090/parabank/services/bank/swagger.yaml"
+               "value": "http://localhost:8080/parabank/services/bank/swagger.yaml"
              },
              {
                "name": "BASEURL",
-               "value": "http://localhost:8090/parabank/services/bank"
+               "value": "http://localhost:8080/parabank/services/bank"
              }
            ]
          },
@@ -366,23 +371,29 @@ select **New> File**.
      }
      ```
    * Take note of the following:
-     * **server** points to the address of the SOAtest server, your local
-SOAtest that is used for this tutorial.
+     * **server** points to the address of the SOAtest server
+that is used for this tutorial.
      * **assets** defines any files in your Cucumber java project that should be
 automatically deployed to the SOAtest server.  This should include any tst files
 containing tests needed for executing your step definitions.
-     * **executionSuite** defines the SOAtest test suite (.tst) file that will
-be dynamically created on-the-fly by the SOAtest server in order to execute
-the steps in any Cucumber test scenarios.
+     * **executionSuite** defines characteristics of the SOAtest test suite
+(.tst) file that will be dynamically created on-the-fly by the SOAtest server
+in order to execute the steps in the Cucumber test scenarios.
      * **variables** defines environment variables that should be created in
-the dynamically created test suite prior to execution (correct the port number
-for your ParaBank if needed).
-     * **stepdefs** has the pattern for each step definition, the ones Cucumber
-originally indicated that you needed to implement.
+the dynamically-created test suite prior to execution (correct the port number
+for your locally running ParaBank if needed).
+     * **stepdefs** describes each step definition that Cucumber originally
+indicated that you needed to implement (see Step 10 of this tutorial).
      * **actions** defines what happens when the step definition is instructed
 to execute.  It can set variables in the test suite or copy tests or scenarios
-from a pre-existing test suite, like the ones you created earlier for creating
-and validating an account.
+from a pre-existing test suite.
+
+1. **Create the glue code** that dynamically loads the step definitions from
+**parabank_stepdefs.json**.
+   * Under **src/test/java** right-click **com.parasoft.example.parabank.cucumber** then select
+**New> Class**.  Type the following and then click **Finish** to complete the wizard:
+     * **Name:** ParaBankStepDefinitions
+     * **Interfaces:** Select **Add..**, type **cucumber.api.java8.GlueBase**, then click **OK**
    * Update **ParaBankStepDefinitions.java**.  Normally you would implement
 each step definition as a block of java code but instead you will be calling
 **StepDefinitionLoader.loadStepDefinitions()** to load them from the
@@ -409,9 +420,15 @@ the JSON and implemented as SOAtest test cases:
    * Make sure ParaBank is still running.
    * Start the SOAtest Server if not running (from
 **Window> Show View> Other...> Parasoft> SOAtest Server**).
-   * Right-click **parabank.feature** then select **Run As> JUnit Test**.  Click
-the **JUnit** view.  Notice the scenario ran and passed but now shows all steps
-in the test scenario as having executed instead of being skipped.
+     * Switch back to the **Parasoft SOAtest** perspective.
+     * Find the **SOAtest Server** view (if it is not present
+select **Window> Show View> Other...> Parasoft> SOAtest Server**)
+     * Start the server by clicking on the green arrow at the top of the view.
+   * Back in the **Java** perspective, right-click **parabank.feature**, select
+select **Run As> Run configurations...> JUnit> cucumber** then click **Run**.
+Review the results in the **JUnit** view.  Notice that the scenario ran and
+passed and that all steps in the test scenario now show as having executed
+instead of being skipped.
    * Click the **Console** view and observe the following message from Cucumber,
 indicating that the tst file ran on the SOAtest server and that all the steps
 in the Cucumber scenario have passed:
