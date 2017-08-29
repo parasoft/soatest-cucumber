@@ -99,7 +99,7 @@ in the previous step.  You can click the **Progress** view to check the build
 progress.  After the build has finished, verify no errors are shown in the
 **Problems** view.
 
-1. **Create the java classes required for Cucumber test execution:**
+1. **Create the JUnit suite class required for Cucumber test execution:**
    * In the **parabank.cucumber** project expand
 **src/test/java** and then expand **com.parasoft.example.parabank.cucumber**.
    * Right-click **AppTest.java** then select **Delete**.  This file is not
@@ -143,37 +143,6 @@ named **cucumber**) and select **New> File**.
      Then A new loan account should exist
      ```
 
-1. **Run the Cucumber scenario.**
-   * Right-click **parabank.feature** then select **Run As> Run configurations**.
-Right-click on **JUnit** and choose **New**.  Select **JUnit 4** as the
-Test runner and then click **Run**.  Review the results in the **JUnit** view.  
-Notice that the scenario ran and passed but all steps in the test scenario were skipped.
-   * Click on the **Console** view and observe the following message from Cucumber,
-indicating that you need to implement the following step definitions:
-     ```
-     You can implement missing steps with the snippets below:
-
-     Given("^I am user (\\d+)$", (Integer arg1) -> {
-         // Write code here that turns the phrase above into concrete actions
-         throw new PendingException();
-     });
-
-     Given("^using funds from account (\\d+)$", (Integer arg1) -> {
-         // Write code here that turns the phrase above into concrete actions
-         throw new PendingException();
-     });
-
-     When("^I create a new loan account$", () -> {
-         // Write code here that turns the phrase above into concrete actions
-         throw new PendingException();
-     });
-
-     Then("^A new loan account should exist$", () -> {
-         // Write code here that turns the phrase above into concrete actions
-         throw new PendingException();
-     });
-     ```
-
 1. **Create a SOAtest test suite**:
    * Make sure ParaBank is running as described at the start of this tutorial.
    * Right-click **src/test/resources/com/parasoft/example/parabank/cucumber**
@@ -185,7 +154,7 @@ indicating that you need to implement the following step definitions:
    * Type **http://localhost:8080/parabank/services/bank/swagger.yaml** (correct
 the port number if needed) then click **Finish**.
 
-1. Open the SOAtest perspective as follows:
+1. Open the Parasoft SOAtest perspective as follows:
    * Click **Window> Perspective> Open Perspective> Other...**
    * Select **Parasoft SOAtest** then click **OK**
 
@@ -213,7 +182,7 @@ the test named **/accounts/{accountId} - GET** then select **Copy**.
 Right-click **Test Steps** again then select **Paste**.
 
 1. **Configure the SOAtest test cases** to use values from the Cucumber
-scenario. The REST API to create an account requires parameters for
+scenario. The Parabank REST API to create an account requires parameters for
 customer ID, account type, and the ID of an account from which to transfer
 funds.  You need to configure those values in the REST Clients as variables.
 Later, you will define how the values of those variables are set.
@@ -242,8 +211,8 @@ click **OK**:
             ```
         * **fromAccountId:** ${fromAccountId}
      * Click the **HTTP Options** tab and then click
-**HTTP Headers**.  Click **Add** and enter **Accept** for Name and
-**application/json** for Value.  Click **OK**.
+**HTTP Headers**.  Click **Add** and enter **Accept** for **Name** and
+**application/json** for **Value**.  Click **OK**.
    * Create a new **JSON Data Bank** as follows:
      * Right-click **CreateAccount** then select **Add Output...**
      * On the left, select **Reponse> Traffic**.
@@ -271,8 +240,8 @@ the test as follows then select **File> Save**:
      * Change **Name** to **GetAccountInfo**.
      * Click the **Path** tab and set **accountId** to ${accountId}.
      * Click the **HTTP Options** tab and then click
-**HTTP Headers**.  Click **Add** and enter **Accept** for Name and
-**application/json** for Value.  Click **OK**.
+**HTTP Headers**.  Click **Add** and enter **Accept** for **Name** and
+**application/json** for **Value**.  Click **OK**.
    * Create a new **JSON Assertor** as follows:
      * Right-click **GetAccountInfo** then select **Add Output...**
      * On the left, select **Response> Traffic**.
@@ -295,7 +264,7 @@ the test as follows then select **File> Save**:
      * Select **type** then click **Finish**.
      * Set the **Expected Value** to **${expectedAccountType}**.
      * Expand  **Options** (at the very bottom) then enable **Trim content** and
-**Ignore case**
+**Ignore case**.
      * Select **File> Save**.
 
 1. **Create the step definitions, linking them to the SOAtest test cases:**
@@ -382,8 +351,9 @@ in order to execute the steps in the Cucumber test scenarios.
      * **variables** defines environment variables that should be created in
 the dynamically-created test suite prior to execution (correct the port number
 for your locally running ParaBank if needed).
-     * **stepdefs** describes each step definition that Cucumber originally
-indicated that you needed to implement (see Step 10 of this tutorial).
+     * **stepdefs** describes each step definition, including the pattern
+used to match test steps and the actions to take when dynamically creating
+the .tst file as the Cucumber test scenario executes.
      * **actions** defines what happens when the step definition is instructed
 to execute.  It can set variables in the test suite or copy tests or scenarios
 from a pre-existing test suite.
@@ -394,8 +364,8 @@ from a pre-existing test suite.
 **New> Class**.  Type the following and then click **Finish** to complete the wizard:
      * **Name:** ParaBankStepDefinitions
      * **Interfaces:** Select **Add..**, type **cucumber.api.java8.GlueBase**, then click **OK**
-   * Update **ParaBankStepDefinitions.java**.  Normally you would implement
-each step definition as a block of java code but instead you will be calling
+   * Normally when writing glue code for Cucumber you would implement
+each step definition as a block of java code. Instead you will call
 **StepDefinitionLoader.loadStepDefinitions()** to load them from the
 **parabank_stepdefs.json** as follows:
      ```
@@ -415,7 +385,7 @@ each step definition as a block of java code but instead you will be calling
      }
      ```
 
-1. **Re-run the Cucumber scenario** now that the step definitions are defined in
+1. **Run the Cucumber scenario** now that the step definitions are defined in
 the JSON and implemented as SOAtest test cases:
    * Make sure ParaBank is still running.
    * Start the SOAtest Server if not running (from
@@ -424,11 +394,10 @@ the JSON and implemented as SOAtest test cases:
      * Find the **SOAtest Server** view (if it is not present
 select **Window> Show View> Other...> Parasoft> SOAtest Server**)
      * Start the server by clicking on the green arrow at the top of the view.
-   * Back in the **Java** perspective, right-click **parabank.feature**, select
-select **Run As> Run configurations...> JUnit> cucumber** then click **Run**.
-Review the results in the **JUnit** view.  Notice that the scenario ran and
-passed and that all steps in the test scenario now show as having executed
-instead of being skipped.
+   * Back in the **Java** perspective, right-click **parabank.feature**
+then select **Run As> Run configurations**. Review the results in the **JUnit** view.
+Notice that the scenario ran and passed and that all steps in the test scenario
+show as having executed.
    * Click the **Console** view and observe the following message from Cucumber,
 indicating that the tst file ran on the SOAtest server and that all the steps
 in the Cucumber scenario have passed:
