@@ -9,7 +9,7 @@ Execute [Cucumber](https://cucumber.io) test scenarios using
  * Implement Cucumber step definitions as
 [Parasoft SOAtest](https://www.parasoft.com/product/soatest/) test cases,
 eliminating the labor and difficulty of manually coding step definitions.
- * Use JSON to define your step definitions and link them to SOAtest test cases.
+ * Use JSON to create your step definitions and link them to SOAtest test cases.
 
 
 ## Introduction
@@ -27,7 +27,7 @@ or [CLI Runner](https://cucumber.io/docs/reference/jvm#cli-runner).
 ## Tutorial
 
 The [tutorial](tutorial.md) provides step-by-step instructions for how to test
-a real web application by executing a [Cucumber](https://cucumber.io) test
+the Parabank web application by executing a [Cucumber](https://cucumber.io) test
 scenario with [Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
 [Click here](tutorial.md) to view the tutorial.
 
@@ -47,7 +47,7 @@ is executed.  This module simplifies the creation of step definitions by
 allowing you to create SOAtest tests as the implementation for what should
 happen at each step.  Think of each step definition as a map between that step
 and a reusable SOAtest test or test suite that should get run when that step
-gets executed.
+is executed.
 
 For example, one step definition might reference an individual SOAtest REST Client
 that makes a call to a REST API.  A second step definition might reference
@@ -78,10 +78,10 @@ module:
 
 1. **Create a library of one or more SOAtest test suite (.tst) files.**  Create
 one or more SOAtest test suite (.tst) files in Parasoft SOAtest that contain the
-tests or scenarios for executing each step definition.  The individual tests or
+tests for executing each step definition.  The individual tests or
 test suites within a single .tst file do not need to be related to each other or
-run successfully together within a single .tst.  They are building blocks that
-will get put together into larger scenarios that are defined by the Cucumber
+be able to run successfully together. They are building blocks that
+will get put together into larger scenarios defined by the Cucumber
 feature files.
 
    Test steps may depend on data values that get passed to them directly
@@ -96,11 +96,11 @@ won't necessarily be able to run as-is since the values of any variables
 present are not being set by anything in the tst file.
 
    For variables that are injected from the Cucumber scenario file, you will need
-to define a [set action](link TBD) within your step definition that will cause
+to define a set action within your step definition that will cause
 a SOAtest test variable to be created and initialized with the value from the
 scenario.  For variables that are created by a Data Bank tool, you will need
 to ensure that the column name defined by the Data Bank and the column name
-referenced by the following test step are the same.
+referenced by the test step that uses it are the same.
 
    For reference, download and open this
 [example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.tst)
@@ -111,8 +111,9 @@ file.
 1. **Create the JSON step definitions file.**  This
 file contains general properties that will be used when executing
 Cucumber test scenarios, as well as the specific step definitions that map
-test steps to SOAtest test cases.  Here is a description of the properties
-in that file:
+test steps to SOAtest test cases.  See
+[this example](src/it/resources/com/parasoft/cucumber/soatest/parabank/parabank_stepdefs.json).
+Here is a description of the properties that can appear in a step definitions file:
    * runner - Specifies properties related to the location and configuration
    of the SOAtest server and the SOAtest .tst file that gets dynamically
    created as the Cucumber scenarios execute.
@@ -122,7 +123,7 @@ in that file:
      "https://localhost:9443".
      * executionSuite - Specifies characteristics of the
      SOAtest .tst file that will be dynamically created on
-     the SOAtest server as the Cucumber scenario executes.
+     the SOAtest server as the Cucumber scenarios execute.
        * parent - The directory on the SOAtest server
        where the dynamically-created SOAtest .tst file will
        be saved.
@@ -138,7 +139,8 @@ in that file:
       * testConfiguration - Specifies the SOAtest test
       configuration to use when the dynamically-created
       SOAtest .tst file is executed.
-    * assets - Specifies test assets that will be copied to
+    * assets - Specifies test assets that will be copied from
+    your Java project to
     the SOAtest server.  This is used to configure the SOAtest
     server with the library of .tst files used by the
     Cucumber scenarios.  This is an array where each object
@@ -147,12 +149,13 @@ in that file:
       * parent - The directory on the SOAtest server to which
       the test asset will be copied.
    * stepdefs
-     * step - The type of step.  Possible values are "Given",
-     "When", "Then", "And", and "But".
+     * step - [The type of step](https://github.com/cucumber/cucumber/wiki/Given-When-Then).
+     Possible values are "Given", "When", "Then", "And", and "But".
      * pattern - The pattern used to link the step defintion
-     to all the matching test steps.
+     to the matching test steps.
      * args - The number of arguments represented by the
-     capture groups in the pattern.  For example, if two
+     [capture groups](https://cucumber.io/docs/reference#step-definitions)
+     in the pattern.  For example, if two
      capture groups are defined in the pattern, then the
      value should be set to 2.
      * actions - Specifies the actions that should be taken
@@ -197,7 +200,7 @@ of the file can be found [here](src/main/schema/stepdefs.json).
 configure a Maven java project for running cucumber tests; you can read the
 description from the
 [Cucumber java documentation](https://cucumber.io/docs/reference/jvm#java) for
-details on how to do this.  You will need a Maven pom.xml with the
+details on how this is normally done.  Your project will need a Maven pom.xml with the
 "info.cukes:cucumber-java8" dependency.  Additionally, you will need to do the
 following in your pom.xml:
    * Add the build.parasoft.com Maven repository which hosts releases for this

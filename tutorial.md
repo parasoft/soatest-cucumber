@@ -392,7 +392,7 @@ the JSON and implemented as SOAtest test cases:
 **Window> Show View> Other...> Parasoft> SOAtest Server**).
      * Switch back to the **Parasoft SOAtest** perspective.
      * Find the **SOAtest Server** view (if it is not present
-select **Window> Show View> Other...> Parasoft> SOAtest Server**)
+select **Window> Show View> Other...> Parasoft> SOAtest Server**).
      * Start the server by clicking on the green arrow at the top of the view.
    * Back in the **Java** perspective, right-click **parabank.feature**
 then select **Run As> Run configurations**. Review the results in the **JUnit** view.
