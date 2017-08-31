@@ -1,7 +1,7 @@
 # Parasoft SOAtest-Cucumber Tutorial
 
 This tutorial provides step-by-step instructions for how to test the web
-application Parabank by executing a [Cucumber](https://cucumber.io) test scenario
+application ParaBank by executing a [Cucumber](https://cucumber.io) test scenario
 using [Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
 
 
@@ -182,7 +182,7 @@ the test named **/accounts/{accountId} - GET** then select **Copy**.
 Right-click **Test Steps** again then select **Paste**.
 
 1. **Configure the SOAtest test cases** to use values from the Cucumber
-scenario. The Parabank REST API to create an account requires parameters for
+scenario. The ParaBank REST API to create an account requires parameters for
 customer ID, account type, and the ID of an account from which to transfer
 funds.  You need to configure those values in the REST Clients as variables.
 Later, you will define how the values of those variables are set.
@@ -274,7 +274,7 @@ the test as follows then select **File> Save**:
 select **New> File**.
    * For **File name** type type **parabank_stepdefs.json** then click **Finish**.
    * In the **parabank_stepdefs.json** file, add then following then click
-**File> Save** (update the port number for your Parabank server in the 
+**File> Save** (update the port number for your ParaBank server in the
 variables element if needed):
      ```
      {

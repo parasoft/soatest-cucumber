@@ -16,7 +16,7 @@ eliminating the labor and difficulty of manually coding step definitions.
 
 This java module enables you to use a JSON document to define step definitions
 that are linked to previously-defined SOAtest test cases.  As the Cucumber
-scenarios are executed, the module will dynamically construct and configure a 
+scenarios are executed, the module will dynamically construct and configure a
 SOAtest test suite based on steps in the Cucumber feature file, then
 automatically execute that test suite on a SOAtest server.
 This module has no dependencies on JUnit but can be invoked from either
@@ -27,7 +27,7 @@ or [CLI Runner](https://cucumber.io/docs/reference/jvm#cli-runner).
 ## Tutorial
 
 The [tutorial](tutorial.md) provides step-by-step instructions for how to test
-the Parabank web application by executing a [Cucumber](https://cucumber.io) test
+the ParaBank web application by executing a [Cucumber](https://cucumber.io) test
 scenario with [Parasoft SOAtest](https://www.parasoft.com/product/soatest/).
 [Click here](tutorial.md) to view the tutorial.
 
@@ -224,7 +224,7 @@ java module:
      </dependency>
      ```
 
-   Create a "src/test/java/*your_java_package*" source directory with a single 
+   Create a "src/test/java/*your_java_package*" source directory with a single
 Java class that extends cucumber.api.java8.GlueBase or one if its subclasses
 (suc as cucumber.api.java8.En) as shown in the
 [lambda expressions](https://cucumber.io/docs/reference/jvm#lambda-expressions-java-8)
@@ -285,13 +285,13 @@ should see the following output from Apache Maven:
    Test Execution - waiting on tests to complete.
    Test Execution of [/TestAssets/ParaBankTests.tst] completed.
    Test Execution of [/TestAssets/ParaBankTests.tst], results (failures/total): 0/2
-   
+
      Scenario: Create a new loan account    # com/parasoft/cucumber/soatest/parabank/parabank.feature:4
        Given I am user 12212                # StepDefinitionLoader.java:114
        And using funds from account 54321   # StepDefinitionLoader.java:114
        When I create a new loan account     # StepDefinitionLoader.java:114
        Then A new loan account should exist # StepDefinitionLoader.java:114
-   
+
    1 Scenarios (1 passed)
    4 Steps (4 passed)
    0m10.068s
