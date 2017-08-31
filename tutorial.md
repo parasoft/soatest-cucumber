@@ -395,9 +395,10 @@ the JSON and implemented as SOAtest test cases:
 select **Window> Show View> Other...> Parasoft> SOAtest Server**).
      * Start the server by clicking on the green arrow at the top of the view.
    * Back in the **Java** perspective, right-click **parabank.feature**
-then select **Run As> Run configurations**. Review the results in the **JUnit** view.
-Notice that the scenario ran and passed and that all steps in the test scenario
-show as having executed.
+then select **Run As> Run configurations**.  Right-click on **JUnit** and choose
+**New**.  Select **JUnit 4** as the Test runner and then click **Run**.  Review
+the results in the **JUnit** view.  Notice that the scenario ran and passed and
+that all steps in the test scenario show as having executed.
    * Click the **Console** view and observe the following message from Cucumber,
 indicating that the tst file ran on the SOAtest server and that all the steps
 in the Cucumber scenario have passed:
