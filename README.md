@@ -226,7 +226,7 @@ java module:
 
    Create a "src/test/java/*your_java_package*" source directory with a single
 Java class that extends cucumber.api.java8.GlueBase or one if its subclasses
-(suc as cucumber.api.java8.En) as shown in the
+(such as cucumber.api.java8.En) as shown in the
 [lambda expressions](https://cucumber.io/docs/reference/jvm#lambda-expressions-java-8)
 example.  However, don't manually code any step definitions in the constructor.
 Instead, add a single line to the constructor which calls
