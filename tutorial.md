@@ -86,7 +86,7 @@ Make the following edits then select **File> Save**:
        <dependency>
          <groupId>com.parasoft</groupId>
          <artifactId>soatest-cucumber</artifactId>
-         <version>0.0.1</version>
+         <version>0.0.2</version>
          <scope>test</scope>
        </dependency>
      </dependencies>
