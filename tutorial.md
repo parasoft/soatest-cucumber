@@ -222,12 +222,10 @@ click **OK**:
      * Click the **Literal** tab then type the following under **Literal**:
        ```
        {
-         "account" : {
-           "id" : 12345,
-           "customerId" : 112212,
-           "type" : "LOAN",
-           "balance" : "100.00"
-         }
+         "id" : 12345,
+         "customerId" : 112212,
+         "type" : "LOAN",
+         "balance" : "100.00"
        }
        ```
      * Click the **Tree** tab, select **id** then click **Extract Element**.
@@ -251,12 +249,10 @@ the test as follows then select **File> Save**:
      * Click the **Expected JSON** tab then type the following under **Literal**:
        ```
        {
-         "account" : {
-           "id" : 12345,
-           "customerId" : 112212,
-           "type" : "LOAN",
-           "balance" : "100.00"
-         }
+         "id" : 12345,
+         "customerId" : 112212,
+         "type" : "LOAN",
+         "balance" : "100.00"
        }
        ```
      * Click the **Configuration** tab then click **Add...** on the lower left.
