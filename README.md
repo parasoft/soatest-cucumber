@@ -219,7 +219,7 @@ java module:
      <dependency>
        <groupId>com.parasoft</groupId>
        <artifactId>soatest-cucumber</artifactId>
-       <version>0.0.1</version>  <!-- set this to current release version -->
+       <version>0.0.2</version>  <!-- set this to current release version -->
        <scope>test</scope>
      </dependency>
      ```
