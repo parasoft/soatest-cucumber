@@ -48,13 +48,15 @@ import cucumber.runtime.java8.*;
 public class StepDefinitionLoader {
     private static final String PROP_SOATEST_USERNAME = "soatest.username"; //$NON-NLS-1$
     private static final String PROP_SOATEST_PASSWORD = "soatest.password"; //$NON-NLS-1$
+    private static final String PROP_USER_LANGUAGE = "user.language"; //$NON-NLS-1$
     private static final String DEFAULT_SOATEST_USERNAME = ""; //$NON-NLS-1$
     private static final String DEFAULT_SOATEST_PASSWORD = ""; //$NON-NLS-1$
     private static final String SOATEST_USERNAME = System.getProperty(PROP_SOATEST_USERNAME, DEFAULT_SOATEST_USERNAME);
     private static final String SOATEST_PASSWORD = System.getProperty(PROP_SOATEST_PASSWORD, DEFAULT_SOATEST_PASSWORD);
     private static final String SET_COLON = "set:"; //$NON-NLS-1$
     private static final String COPY_COLON = "copy:"; //$NON-NLS-1$
-    private static final String SLASH_TEST_SUITE = "/Test Suite"; //$NON-NLS-1$
+    private static final String JA = "ja"; //$NON-NLS-1$
+    private static final String SLASH_TEST_SUITE = JA.equals(System.getProperty(PROP_USER_LANGUAGE)) ? "/テスト スイート" : "/Test Suite"; //$NON-NLS-1$ //$NON-NLS-2$
     private static final String FUNCVIOL = "//FuncViol"; //$NON-NLS-1$
     private static final String TEST_CASE_ID = "testCaseId"; //$NON-NLS-1$
     private static final String MSG ="msg"; //$NON-NLS-1$
