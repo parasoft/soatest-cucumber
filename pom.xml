@@ -113,7 +113,7 @@
   <repositories>
     <repository>
       <id>Parasoft</id>
-      <url>http://build.parasoft.com/maven/</url>
+      <url>https://build.parasoft.com/maven/</url>
     </repository>
   </repositories>
 
